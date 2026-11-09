@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard | AssessAI</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/employee-dashboard.css">
+</head>
+
+<body class="employee-page">
+
+<div class="employee-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="employee-sidebar">
+        <a class="employee-brand" href="dashboard.html">
+            <div class="brand-icon">A</div>
+            <div>
+                <h2>Assess<span>AI</span></h2>
+                <small>Employee Portal</small>
+            </div>
+        </a>
+
+        <div class="sidebar-label">MAIN MENU</div>
+
+        <nav class="employee-navigation">
+            <button class="employee-nav-item active" data-target="overview">
+                <span class="nav-icon">⌂</span>
+                <span>Overview</span>
+            </button>
+
+            <button class="employee-nav-item" data-target="my-assignments">
+                <span class="nav-icon">▣</span>
+                <span>My Assignments</span>
+            </button>
+
+            <button class="employee-nav-item" data-target="available-assessments">
+                <span class="nav-icon">▤</span>
+                <span>Available Assessments</span>
+            </button>
+
+            <button class="employee-nav-item" data-target="my-performance">
+                <span class="nav-icon">▥</span>
+                <span>My Performance</span>
+            </button>
+
+            <button class="employee-nav-item" data-target="my-results">
+                <span class="nav-icon">◷</span>
+                <span>My Results</span>
+            </button>
+
+            <button class="employee-nav-item" data-target="ai-feedback">
+                <span class="nav-icon">✧</span>
+                <span>AI Feedback</span>
+            </button>
+
+            <button class="employee-nav-item" data-target="my-profile">
+                <span class="nav-icon">◎</span>
+                <span>My Profile</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-promo">
+                <div class="promo-icon">✦</div>
+                <h3>Keep improving!</h3>
+                <p>Complete assessments and track your learning journey.</p>
+            </div>
+
+            <button class="employee-nav-item logout-button" onclick="logout()">
+                <span class="nav-icon">⇥</span>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="employee-main">
+
+        <!-- TOPBAR -->
+        <header class="employee-topbar">
+            <div>
+                <p class="employee-breadcrumb">
+                    Employee Portal <span>/</span>
+                    <span id="breadcrumbTitle">Overview</span>
+                </p>
+                <h2 id="pageHeading">Overview</h2>
+            </div>
+
+            <div class="employee-profile">
+                <div class="employee-avatar" id="employeeAvatar">E</div>
+                <div class="profile-details">
+                    <strong id="userName">Employee</strong>
+                    <small>Employee</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- OVERVIEW -->
+        <section class="employee-view active" id="overview">
+
+            <div class="employee-welcome">
+                <div>
+                    <p class="employee-eyebrow">EMPLOYEE DASHBOARD</p>
+                    <h1>Welcome back, <span id="welcomeName">Employee</span>!</h1>
+                    <p>Track your assessments, monitor your performance and keep learning.</p>
+
+                    <button class="employee-button" data-open-view="my-assignments">
+                        View My Assignments <span>→</span>
+                    </button>
+                </div>
+
+                <div class="welcome-decoration">✦</div>
+            </div>
+
+            <div class="employee-stats-grid">
+
+                <article class="employee-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">▣</span>
+                        <span class="stat-caption">Assigned</span>
+                    </div>
+                    <p>Assigned Assessments</p>
+                    <h2 id="assignedCount">0</h2>
+                    <small>Assigned by Admin</small>
+                </article>
+
+                <article class="employee-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">✓</span>
+                        <span class="stat-caption">Completed</span>
+                    </div>
+                    <p>Completed Assessments</p>
+                    <h2 id="completedCount">0</h2>
+                    <small>Successfully completed</small>
+                </article>
+
+                <article class="employee-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">◷</span>
+                        <span class="stat-caption">Pending</span>
+                    </div>
+                    <p>Pending Assessments</p>
+                    <h2 id="pendingCount">0</h2>
+                    <small>Waiting for completion</small>
+                </article>
+
+                <article class="employee-stat-card">
+                    <div class="stat-top">
+                        <span class="stat-icon">★</span>
+                        <span class="stat-caption">Average</span>
+                    </div>
+                    <p>Average Score</p>
+                    <h2 id="averageScore">0%</h2>
+                    <small>Your quiz performance</small>
+                </article>
+
+            </div>
+
+            <div class="employee-dashboard-grid">
+
+                <article class="employee-card">
+                    <div class="employee-section-heading">
+                        <div>
+                            <p class="employee-eyebrow">YOUR WORK</p>
+                            <h2>Recent Assignments</h2>
+                        </div>
+
+                        <button class="employee-text-button" data-open-view="my-assignments">
+                            View All →
+                        </button>
+                    </div>
+
+                    <div id="recentAssignments">
+                        <div class="employee-empty">Loading assignments...</div>
+                    </div>
+                </article>
+
+                <article class="employee-card">
+                    <p class="employee-eyebrow">QUICK ACCESS</p>
+                    <h2>Quick Actions</h2>
+
+                    <div class="employee-quick-actions">
+
+                        <button class="employee-quick-action" data-open-view="my-assignments">
+                            <span class="quick-icon">▣</span>
+                            <span>
+                                <b>My Assignments</b>
+                                <small>View assessments assigned to you</small>
+                            </span>
+                            <span class="quick-arrow">→</span>
+                        </button>
+
+                        <button class="employee-quick-action" data-open-view="my-performance">
+                            <span class="quick-icon">▥</span>
+                            <span>
+                                <b>My Performance</b>
+                                <small>Check your progress and scores</small>
+                            </span>
+                            <span class="quick-arrow">→</span>
+                        </button>
+
+                        <button class="employee-quick-action" data-open-view="ai-feedback">
+                            <span class="quick-icon">✧</span>
+                            <span>
+                                <b>AI Feedback</b>
+                                <small>Get learning recommendations</small>
+                            </span>
+                            <span class="quick-arrow">→</span>
+                        </button>
+
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- MY ASSIGNMENTS -->
+        <section class="employee-view" id="my-assignments" hidden>
+
+            <div class="employee-page-heading">
+                <p class="employee-eyebrow">ASSESSMENT MANAGEMENT</p>
+                <h1>My Assignments</h1>
+                <p>View and complete assessments assigned to you by your Admin.</p>
+            </div>
+
+            <article class="employee-card">
+                <div class="employee-section-heading">
+                    <div>
+                        <h2>Assigned Assessments</h2>
+                        <p>Check deadlines and assessment status.</p>
+                    </div>
+                </div>
+
+                <div id="assignmentsList">
+                    <div class="employee-empty">Loading your assignments...</div>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- AVAILABLE ASSESSMENTS -->
+        <section class="employee-view" id="available-assessments" hidden>
+
+            <div class="employee-page-heading">
+                <p class="employee-eyebrow">LEARNING CENTRE</p>
+                <h1>Available Assessments</h1>
+                <p>Explore and take available practice quizzes.</p>
+            </div>
+
+            <div id="quizList" class="quiz-grid">
+                <div class="employee-empty">Loading available assessments...</div>
+            </div>
+
+        </section>
+
+        <!-- MY PERFORMANCE -->
+        <section class="employee-view" id="my-performance" hidden>
+
+            <div class="employee-page-heading">
+                <p class="employee-eyebrow">YOUR PROGRESS</p>
+                <h1>My Performance</h1>
+                <p>Understand your assessment scores and learning progress.</p>
+            </div>
+
+            <!-- STATISTICS -->
+            <div class="performance-stats-grid">
+
+                <article class="performance-stat-card">
+                    <div class="performance-stat-icon attempts-icon">▤</div>
+                    <div class="performance-stat-content">
+                        <p>Total Attempts</p>
+                        <h2 id="performanceAttempts">0</h2>
+                        <small>Completed practice quizzes</small>
+                    </div>
+                </article>
+
+                <article class="performance-stat-card">
+                    <div class="performance-stat-icon best-icon">★</div>
+                    <div class="performance-stat-content">
+                        <p>Best Score</p>
+                        <h2 id="bestScore">0%</h2>
+                        <small>Your highest score</small>
+                    </div>
+                </article>
+
+                <article class="performance-stat-card">
+                    <div class="performance-stat-icon average-icon">↗</div>
+                    <div class="performance-stat-content">
+                        <p>Average Score</p>
+                        <h2 id="performanceAverage">0%</h2>
+                        <small>Across completed quizzes</small>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- PERFORMANCE TREND -->
+            <article class="employee-card performance-main-card">
+
+                <div class="employee-section-heading">
+                    <div>
+                        <h2>Performance Trend</h2>
+                        <p>Your scores from completed quiz attempts.</p>
+                    </div>
+                </div>
+
+                <div id="performanceChart" class="performance-chart">
+                    <div class="performance-empty">
+                        <strong>Loading performance data...</strong>
+                    </div>
+                </div>
+
+            </article>
+
+            <!-- PERFORMANCE SUMMARY -->
+            <article class="employee-card performance-summary-card">
+
+                <div class="employee-section-heading">
+                    <div>
+                        <h2>Performance Summary</h2>
+                        <p>Your overall learning progress.</p>
+                    </div>
+                </div>
+
+                <div id="performanceSummary" class="performance-summary">
+                    Complete assessments to see your performance summary.
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- MY RESULTS -->
+        <section class="employee-view" id="my-results" hidden>
+
+            <div class="employee-page-heading">
+                <p class="employee-eyebrow">ASSESSMENT HISTORY</p>
+                <h1>My Results</h1>
+                <p>Review your completed assessments, scores and feedback.</p>
+            </div>
+
+            <article class="employee-card">
+                <h2>Quiz Results</h2>
+
+                <div id="resultsList" class="employee-results-list">
+                    <div class="employee-empty">Loading your results...</div>
+                </div>
+            </article>
+
+            <article class="employee-card">
+                <h2>Document Assessment Feedback</h2>
+
+                <div id="submissionsList">
+                    <div class="employee-empty">Loading document feedback...</div>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- AI FEEDBACK -->
+        <section class="employee-view" id="ai-feedback" hidden>
+
+            <div class="employee-page-heading">
+                <p class="employee-eyebrow">PERSONALIZED LEARNING</p>
+                <h1>AI Feedback</h1>
+                <p>Get feedback and suggestions based on your completed assessments.</p>
+            </div>
+
+            <article class="feedback-hero">
+                <div class="feedback-hero-icon">✧</div>
+
+                <div>
+                    <p class="employee-eyebrow">AI PERFORMANCE ASSISTANT</p>
+                    <h2>Learn from every assessment</h2>
+                    <p>Generate personalized feedback and discover areas to improve.</p>
+                </div>
+            </article>
+
+            <article class="employee-card">
+
+                <div class="employee-section-heading">
+                    <div>
+                        <h2>Your Assessment Reports</h2>
+                        <p id="feedbackQuizInfo">
+                            Complete an assessment to generate personalized feedback.
+                        </p>
+                    </div>
+
+                    <button
+                        class="employee-button"
+                        id="generateFeedbackButton"
+                        type="button">
+                        Generate Missing Reports
+                    </button>
+                </div>
+
+                <div id="aiFeedbackResult" class="ai-feedback-result">
+                    <div class="employee-empty">
+                        Your AI-generated feedback will appear here.
+                    </div>
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- MY PROFILE -->
+        <section class="employee-view" id="my-profile" hidden>
+
+            <div class="employee-page-heading">
+                <p class="employee-eyebrow">ACCOUNT INFORMATION</p>
+                <h1>My Profile</h1>
+                <p>View your employee account information.</p>
+            </div>
+
+            <article class="employee-card profile-card">
+
+                <div class="profile-cover"></div>
+
+                <div class="profile-main">
+                    <div class="profile-large-avatar" id="profileAvatar">E</div>
+
+                    <div>
+                        <h2 id="profileName">Employee</h2>
+                        <p id="profileRole">Employee Account</p>
+                    </div>
+                </div>
+
+                <div class="profile-information">
+
+                    <div class="profile-info-item">
+                        <small>Full Name</small>
+                        <strong id="profileFullName">Not available</strong>
+                    </div>
+
+                    <div class="profile-info-item">
+                        <small>Email Address</small>
+                        <strong id="profileEmail">Not available</strong>
+                    </div>
+
+                    <div class="profile-info-item">
+                        <small>Account Role</small>
+                        <strong id="profileRoleValue">Employee</strong>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="employee-footer">
+            <p>© 2026 AssessAI. Employee Portal.</p>
+            <p>Learn. Improve. Succeed.</p>
+        </footer>
+
+    </main>
+</div>
+
+<script src="../js/app.js"></script>
+<script src="../js/employee.js"></script>
+
+</body>
+</html>

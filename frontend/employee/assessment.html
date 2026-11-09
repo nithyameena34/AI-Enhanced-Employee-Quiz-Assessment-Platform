@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assessment · AssessAI</title>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/employee-dashboard.css" />
+  </head>
+
+  <body class="employee-page">
+    <div class="employee-layout">
+
+      <aside class="employee-sidebar">
+        <a class="employee-brand" href="../index.html">
+          <span class="employee-brand-icon">✦</span>
+          <span>Assess<span>AI</span></span>
+        </a>
+
+        <p class="employee-sidebar-label">EMPLOYEE MENU</p>
+
+        <nav class="employee-navigation">
+          <a class="employee-nav-item" href="dashboard.html">
+            <span class="employee-nav-icon">⌂</span>
+            Dashboard
+          </a>
+
+          <a class="employee-nav-item active" href="#">
+            <span class="employee-nav-icon">▤</span>
+            Current Assessment
+          </a>
+        </nav>
+
+        <div class="employee-sidebar-bottom">
+          <div class="employee-promo">
+            <div class="employee-promo-icon">✧</div>
+            <h3>Take your time</h3>
+            <p>Read every question carefully before submitting your answers.</p>
+          </div>
+
+          <button class="employee-logout" type="button" onclick="logout()">
+            <span>↪</span> Logout
+          </button>
+        </div>
+      </aside>
+
+      <main class="employee-main">
+
+        <header class="employee-topbar">
+          <div class="employee-breadcrumb">
+            AssessAI <span> / </span>
+            <a href="dashboard.html">Dashboard</a>
+            <span> / </span>
+            <strong>Assessment</strong>
+          </div>
+
+          <div class="employee-profile">
+            <div class="employee-avatar">E</div>
+            <div>
+              <strong>Employee Workspace</strong>
+              <small>Assessment in progress</small>
+            </div>
+          </div>
+        </header>
+
+        <div id="assessmentHeader" class="assessment-heading">
+          <p class="employee-eyebrow">ASSESSMENT</p>
+          <h1>Loading assessment...</h1>
+        </div>
+
+        <form id="assessmentForm" class="assessment-form">
+          <div id="questions"></div>
+
+          <div class="assessment-submit-row">
+            <button class="employee-button assessment-submit" type="submit">
+              Submit Assessment →
+            </button>
+          </div>
+        </form>
+
+        <p id="message" class="employee-message" role="status"></p>
+
+        <section id="result" class="employee-result" hidden></section>
+
+        <footer class="employee-footer">
+          © 2026 AssessAI · Employee Assessment Platform
+        </footer>
+
+      </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/assessment.js"></script>
+  </body>
+</html>

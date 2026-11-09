@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f4f1ff" />
+    <title>Sign in · AssessAI</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="auth-page auth-modern">
+    <a class="brand auth-brand" href="/"> Assess<span>AI</span></a>
+    <main class="auth-shell">
+      <section class="auth-visual">
+        <div class="visual-copy">
+          <span>YOUR SKILLS. YOUR GROWTH.</span>
+          <h2>Make every learning moment count.</h2>
+          <p>
+            One place for assessments, progress tracking and meaningful
+            feedback.
+          </p>
+        </div>
+        <div class="visual-foot">
+          <span>ASSESS</span><i></i><span>LEARN</span><i></i><span>GROW</span>
+        </div>
+      </section>
+      <section class="auth-content">
+        <div class="auth-content-inner">
+          <div class="auth-symbol">✳</div>
+          <p class="eyebrow">WELCOME BACK</p>
+          <h1>Sign in to AssessAI</h1>
+          <p class="auth-intro">
+            Choose your account type to continue to your workspace.
+          </p>
+          <div
+            class="role-picker"
+            role="group"
+            aria-label="Choose account type"
+          >
+            <button
+              type="button"
+              class="role-option active"
+              data-role="employee"
+            >
+              <span class="role-icon">♙</span
+              ><span
+                ><b>Employee</b
+                ><small>Take assessments & view results</small></span
+              ><span class="role-check">✓</span></button
+            ><button type="button" class="role-option" data-role="admin">
+              <span class="role-icon">▦</span
+              ><span
+                ><b>Admin</b
+                ><small>Manage quizzes & view analytics</small></span
+              ><span class="role-check">✓</span>
+            </button>
+          </div>
+          <form id="loginForm" class="auth-form">
+            <input
+              type="hidden"
+              name="role"
+              id="loginRole"
+              value="employee"
+            /><label
+              >Email address<input
+                name="email"
+                type="email"
+                autocomplete="username"
+                required
+                placeholder="you@company.com" /></label
+            ><label
+              >Password<input
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                placeholder="Enter your password"
+            /></label>
+            <div class="auth-meta">
+              <label class="remember"
+                ><input type="checkbox" id="rememberMe" /> Remember me</label
+              ><a href="forgot_password.html">Forgot password?</a>
+            </div>
+            <button class="btn primary full auth-submit" type="submit">
+              Sign in as Employee <span>→</span>
+            </button>
+            <p id="message" class="message" role="alert"></p>
+          </form>
+          <p class="auth-switch">
+            Don't have an account?
+            <a href="register.html">Create account</a>
+          </p>
+          <p class="auth-legal">
+            By continuing, you agree to use this platform responsibly.
+          </p>
+        </div>
+      </section>
+    </main>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>

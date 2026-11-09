@@ -1,0 +1,1043 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f8f6">
+
+    <title>Admin Dashboard | AssessAI</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+
+<body class="admin-page">
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="adminSidebar">
+
+        <div class="brand">
+            <span class="brand-icon">A</span>
+            <span class="brand-name">AssessAI</span>
+        </div>
+
+        <p class="sidebar-label">MAIN MENU</p>
+
+        <nav class="side-navigation" aria-label="Admin navigation">
+
+            <a href="#overview" class="nav-item active"
+               data-target="overview" aria-current="page">
+                <span class="nav-icon">▦</span>
+                <span class="nav-label">Overview</span>
+            </a>
+
+            <a href="#employee-management" class="nav-item"
+               data-target="employee-management">
+                <span class="nav-icon">♙</span>
+                <span class="nav-label">Employees</span>
+            </a>
+
+            <a href="#quiz-management" class="nav-item"
+               data-target="quiz-management">
+                <span class="nav-icon">▤</span>
+                <span class="nav-label">Quiz Management</span>
+            </a>
+
+            <a href="#question-management" class="nav-item"
+               data-target="question-management">
+                <span class="nav-icon">✎</span>
+                <span class="nav-label">Questions</span>
+            </a>
+
+            <a href="#csv-import" class="nav-item"
+               data-target="csv-import">
+                <span class="nav-icon">⇧</span>
+                <span class="nav-label">CSV Import</span>
+            </a>
+
+            <a href="#assessment-management" class="nav-item"
+               data-target="assessment-management">
+                <span class="nav-icon">▣</span>
+                <span class="nav-label">Assessments</span>
+            </a>
+
+            <a href="#assignment-management" class="nav-item"
+               data-target="assignment-management">
+                <span class="nav-icon">♧</span>
+                <span class="nav-label">Assignments</span>
+            </a>
+
+            <a href="#submission-management" class="nav-item"
+               data-target="submission-management">
+                <span class="nav-icon">☷</span>
+                <span class="nav-label">Submissions</span>
+            </a>
+
+            <a href="#performance-reports" class="nav-item"
+               data-target="performance-reports">
+                <span class="nav-icon">▥</span>
+                <span class="nav-label">Performance</span>
+            </a>
+
+            <a href="#attempt-history" class="nav-item"
+               data-target="attempt-history">
+                <span class="nav-icon">◷</span>
+                <span class="nav-label">Attempt History</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-promo">
+            <div class="promo-icon">✦</div>
+            <h3>AssessAI Admin</h3>
+            <p>Manage employees, assessments and performance in one workspace.</p>
+        </div>
+
+        <button type="button" class="logout-button" onclick="logout()">
+            <span>↪</span> Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <button type="button"
+                        class="mobile-menu-button"
+                        id="sidebarToggle"
+                        aria-label="Toggle navigation">
+                    ☰
+                </button>
+
+                <div class="topbar-heading">
+                    <p class="breadcrumb">
+                        Workspace / <span id="currentPage">Overview</span>
+                    </p>
+                    <h2 id="pageHeading">Dashboard Overview</h2>
+                </div>
+            </div>
+
+            <div class="admin-profile">
+                <div class="profile-avatar">A</div>
+                <div class="profile-info">
+                    <strong id="userName">Administrator</strong>
+                    <span>System Administrator</span>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="dashboard-view active">
+
+            <div class="welcome-section">
+                <div>
+                    <p class="section-label">ADMIN WORKSPACE</p>
+                    <h1>Welcome back, Admin!</h1>
+                    <p>Here is what's happening across your assessment platform.</p>
+                </div>
+
+                <div class="welcome-date" id="dashboardDate"></div>
+            </div>
+
+            <div class="dashboard-section">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Platform Overview</h2>
+                        <p>Monitor your platform statistics.</p>
+                    </div>
+
+                    <button type="button"
+                            class="secondary-button"
+                            onclick="loadAdmin()">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div id="stats" class="stats-grid">
+                    <div class="stat">Loading statistics...</div>
+                </div>
+
+            </div>
+
+            <div class="dashboard-grid overview-panels">
+
+                <div class="dashboard-card">
+                    <div class="card-heading">
+                        <div>
+                            <h3>Quick Actions</h3>
+                            <p>Frequently used admin tools.</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button type="button" class="quick-action"
+                                onclick="location.hash='employee-management'">
+                            <span>♙</span>
+                            <strong>Manage Employees</strong>
+                        </button>
+
+                        <button type="button" class="quick-action"
+                                onclick="location.hash='quiz-management'">
+                            <span>▤</span>
+                            <strong>Manage Quizzes</strong>
+                        </button>
+
+                        <button type="button" class="quick-action"
+                                onclick="location.hash='assessment-management'">
+                            <span>▣</span>
+                            <strong>Create Assessment</strong>
+                        </button>
+
+                        <button type="button" class="quick-action"
+                                onclick="location.hash='performance-reports'">
+                            <span>▥</span>
+                            <strong>View Performance</strong>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-heading">
+                        <div>
+                            <h3>Platform Activity</h3>
+                            <p>Recent assessment activity.</p>
+                        </div>
+                    </div>
+
+                    <div id="recentActivity" class="data-list">
+                        Activity will appear here when available.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EMPLOYEE MANAGEMENT -->
+        <section id="employee-management" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Employee Management</h2>
+                    <p>Create, search and manage employee accounts.</p>
+                </div>
+
+                <button type="button" class="secondary-button"
+                        onclick="loadEmployees()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+                    <div>
+                        <h3>Create Employee</h3>
+                        <p>Add a new employee to AssessAI.</p>
+                    </div>
+                </div>
+
+                <form id="employeeForm" class="modern-form">
+
+                    <div class="form-grid">
+
+                        <div class="field-group">
+                            <label for="employeeName">Employee Name</label>
+                            <input type="text" id="employeeName" name="name"
+                                   placeholder="Enter employee name"
+                                   minlength="2" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="employeeEmail">Email Address</label>
+                            <input type="email" id="employeeEmail" name="email"
+                                   placeholder="employee@example.com" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="employeePassword">Password</label>
+                            <input type="password" id="employeePassword"
+                                   name="password"
+                                   placeholder="Minimum 8 characters"
+                                   minlength="8" maxlength="72" required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="primary-button">
+                            + Create Employee
+                        </button>
+                    </div>
+
+                    <p id="employeeMessage" class="message" role="status"></p>
+
+                </form>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <div class="section-heading inner-heading">
+                    <div>
+                        <h3>Employee Directory</h3>
+                        <p>Search and inspect employee accounts.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input type="search" id="employeeSearch"
+                               placeholder="Search by employee name or email..."
+                               aria-label="Search employees">
+                    </div>
+
+                    <select id="employeeStatusFilter" aria-label="Filter employees">
+                        <option value="all">All employees</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+
+                </div>
+
+                <div id="employeeList" class="data-list">
+                    Loading employees...
+                </div>
+
+            </div>
+
+            <!-- EMPLOYEE ACTIVITY DETAIL -->
+            <div class="dashboard-card" id="employeeActivityPanel" hidden>
+
+                <div class="section-heading inner-heading">
+                    <div>
+                        <h3>Employee Activity</h3>
+                        <p id="employeeActivitySubtitle">
+                            Individual employee performance and progress.
+                        </p>
+                    </div>
+
+                    <button type="button" class="secondary-button"
+                            id="closeEmployeeActivity">
+                        Close
+                    </button>
+                </div>
+
+                <div id="employeeActivityContent" class="data-list">
+                    Select an employee to view activity.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUIZ MANAGEMENT -->
+        <section id="quiz-management" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Practice Quiz Management</h2>
+                    <p>Create, edit, activate and delete practice quizzes.</p>
+                </div>
+
+                <button type="button" class="secondary-button"
+                        onclick="loadQuizzes()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+                    <div>
+                        <h3 id="quizFormHeading">Create New Practice Quiz</h3>
+                        <p>Configure quiz details.</p>
+                    </div>
+                </div>
+
+                <form id="quizForm" class="modern-form">
+
+                    <input type="hidden" id="quizEditId" name="quiz_id">
+
+                    <div class="form-grid">
+
+                        <div class="field-group">
+                            <label for="quizTitle">Quiz Title</label>
+                            <input type="text" name="title" id="quizTitle"
+                                   placeholder="Enter quiz title"
+                                   minlength="3" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="quizDuration">Duration (minutes)</label>
+                            <input type="number" name="duration_minutes"
+                                   id="quizDuration" value="20"
+                                   min="1" max="240" required>
+                        </div>
+
+                    </div>
+
+                    <div class="field-group">
+                        <label for="quizDescription">Description</label>
+                        <textarea name="description" id="quizDescription"
+                                  placeholder="Enter quiz description"
+                                  rows="3"></textarea>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="primary-button"
+                                id="quizSubmitButton">
+                            + Create Quiz
+                        </button>
+
+                        <button type="button" class="secondary-button"
+                                id="cancelQuizEdit" hidden>
+                            Cancel Edit
+                        </button>
+                    </div>
+
+                    <p id="quizMessage" class="message" role="status"></p>
+
+                </form>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <div class="section-heading inner-heading">
+                    <div>
+                        <h3>Practice Quiz Library</h3>
+                        <p>Manage your available quizzes.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input type="search" id="quizSearch"
+                               placeholder="Search quizzes..."
+                               aria-label="Search quizzes">
+                    </div>
+
+                    <select id="quizStatusFilter" aria-label="Filter quizzes">
+                        <option value="all">All quizzes</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div id="quizList" class="quiz-library-list">
+                    Loading quizzes...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUESTION MANAGEMENT -->
+        <section id="question-management" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Question Management</h2>
+                    <p>Create and manage multiple-choice questions.</p>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>Add New Question</h3>
+
+                <form id="questionForm" class="modern-form">
+
+                    <div class="field-group">
+                        <label for="quizSelect">Select Quiz</label>
+                        <select name="quiz_id" id="quizSelect" required>
+                            <option value="">Loading quizzes...</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="questionText">Question</label>
+                        <textarea name="question_text" id="questionText"
+                                  placeholder="Enter your question"
+                                  rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-grid">
+
+                        <div class="field-group">
+                            <label for="optionA">Option A</label>
+                            <input type="text" id="optionA" name="option_a"
+                                   placeholder="Option A" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="optionB">Option B</label>
+                            <input type="text" id="optionB" name="option_b"
+                                   placeholder="Option B" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="optionC">Option C</label>
+                            <input type="text" id="optionC" name="option_c"
+                                   placeholder="Option C" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="optionD">Option D</label>
+                            <input type="text" id="optionD" name="option_d"
+                                   placeholder="Option D" required>
+                        </div>
+
+                    </div>
+
+                    <div class="field-group">
+                        <label for="correctOption">Correct Answer</label>
+                        <select name="correct_option" id="correctOption" required>
+                            <option value="">Select correct answer</option>
+                            <option value="A">Option A</option>
+                            <option value="B">Option B</option>
+                            <option value="C">Option C</option>
+                            <option value="D">Option D</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="explanation">Explanation (Optional)</label>
+                        <textarea name="explanation" id="explanation"
+                                  placeholder="Explain the correct answer"
+                                  rows="2"></textarea>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="primary-button">
+                            Save Question
+                        </button>
+                    </div>
+
+                    <p id="questionMessage" class="message" role="status"></p>
+
+                </form>
+
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Existing Questions</h3>
+                <div id="questionList" class="data-list">
+                    Select a quiz to view its questions.
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- CSV IMPORT -->
+        <section id="csv-import" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>CSV Question Import</h2>
+                    <p>Import multiple questions into a quiz.</p>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>Upload Question CSV</h3>
+
+                <form id="csvImportForm" class="modern-form">
+
+                    <div class="field-group">
+                        <label for="csvQuizSelect">Select Quiz</label>
+                        <select name="quiz_id" id="csvQuizSelect" required>
+                            <option value="">Select a quiz</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="csvFile">Choose CSV File</label>
+                        <input type="file" name="file" id="csvFile"
+                               accept=".csv,text/csv" required>
+                    </div>
+
+                    <p class="help-text">
+                        Required headers: question, option_a, option_b,
+                        option_c, option_d and correct_option.
+                        Explanation is optional.
+                    </p>
+
+                    <div class="form-footer">
+                        <button type="submit" class="primary-button">
+                            Import Questions
+                        </button>
+                    </div>
+
+                    <p id="csvMessage" class="message" role="status"></p>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- ASSESSMENT MANAGEMENT -->
+        <section id="assessment-management" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Assessment Management</h2>
+                    <p>Create and manage employee assessments.</p>
+                </div>
+
+                <button type="button" class="secondary-button"
+                        onclick="loadAssessments()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>Create Assessment</h3>
+
+                <form id="assessmentForm" class="modern-form">
+
+                    <div class="field-group">
+                        <label for="assessmentTitle">Assessment Title</label>
+                        <input type="text" id="assessmentTitle" name="title"
+                               placeholder="Enter assessment title"
+                               minlength="3" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="assessmentDescription">Description</label>
+                        <textarea id="assessmentDescription" name="description"
+                                  rows="3"
+                                  placeholder="Assessment description"></textarea>
+                    </div>
+
+                    <div class="form-grid">
+
+                        <div class="field-group">
+                            <label for="assessmentType">Assessment Type</label>
+                            <select name="assessment_type" id="assessmentType"
+                                    required>
+                                <option value="quiz">Quiz Assessment</option>
+                                <option value="document">Document Assessment</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group" id="assessmentQuizGroup">
+                            <label for="assessmentQuizSelect">Linked Quiz</label>
+                            <select name="quiz_id" id="assessmentQuizSelect">
+                                <option value="">Select a quiz</option>
+                            </select>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="assessmentDuration">Duration (minutes)</label>
+                            <input type="number" id="assessmentDuration"
+                                   name="duration_minutes"
+                                   min="1" max="480" placeholder="Optional">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="maxMarks">Maximum Marks</label>
+                            <input type="number" id="maxMarks" name="max_marks"
+                                   value="100" min="0.01" step="0.01" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="startsAt">Start Date and Time</label>
+                            <input type="datetime-local" id="startsAt"
+                                   name="starts_at">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="deadlineAt">Deadline</label>
+                            <input type="datetime-local" id="deadlineAt"
+                                   name="deadline_at">
+                        </div>
+
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="primary-button">
+                            + Create Assessment
+                        </button>
+                    </div>
+
+                    <p id="assessmentMessage" class="message" role="status"></p>
+
+                </form>
+
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Assessment List</h3>
+                <div id="assessmentList" class="data-list">
+                    Loading assessments...
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ASSIGNMENT MANAGEMENT -->
+        <section id="assignment-management" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Employee Assignments</h2>
+                    <p>Assign assessments and track employee progress.</p>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>Assign Assessment</h3>
+
+                <form id="assignmentForm" class="modern-form">
+
+                    <div class="field-group">
+                        <label for="assignmentAssessment">Select Assessment</label>
+                        <select name="assessment_id" id="assignmentAssessment"
+                                required>
+                            <option value="">Select an assessment</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="assignmentEmployees">Select Employees</label>
+                        <select id="assignmentEmployees" multiple size="6"
+                                required>
+                            <option value="">Loading employees...</option>
+                        </select>
+                        <p class="help-text">
+                            Hold Ctrl while clicking to select multiple employees.
+                        </p>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="primary-button">
+                            Assign Employees
+                        </button>
+                    </div>
+
+                    <p id="assignmentMessage" class="message" role="status"></p>
+
+                </form>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>Assignment Details</h3>
+
+                <div class="field-group">
+                    <label for="assignmentViewSelect">Select Assessment</label>
+                    <select id="assignmentViewSelect">
+                        <option value="">Select an assessment</option>
+                    </select>
+                </div>
+
+                <div id="assignmentList" class="data-list">
+                    Select an assessment to view assignments.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUBMISSIONS -->
+        <section id="submission-management" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Document Submissions</h2>
+                    <p>Review employee uploads and evaluate their work.</p>
+                </div>
+
+                <button type="button" class="secondary-button"
+                        onclick="loadSubmissions()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Submitted Documents</h3>
+                <div id="submissionList" class="data-list">
+                    Loading submissions...
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- PERFORMANCE -->
+        <section id="performance-reports" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Performance Analytics</h2>
+                    <p>Explore employee progress, scores and completion rates.</p>
+                </div>
+
+                <button type="button" class="secondary-button"
+                        onclick="loadPerformance()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <!-- PERFORMANCE FILTERS -->
+            <div class="dashboard-card">
+
+                <div class="toolbar performance-toolbar">
+
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input type="search" id="performanceSearch"
+                               placeholder="Search employee name or email..."
+                               aria-label="Search performance">
+                    </div>
+
+                    <select id="performanceStatusFilter"
+                            aria-label="Filter performance status">
+                        <option value="all">All employees</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                        <option value="overdue">Overdue</option>
+                    </select>
+
+                    <select id="performanceSort"
+                            aria-label="Sort performance">
+                        <option value="name">Sort by name</option>
+                        <option value="score-high">Highest score</option>
+                        <option value="score-low">Lowest score</option>
+                        <option value="completion">Completion rate</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <!-- PERFORMANCE STATISTICS -->
+            <div id="performanceStats" class="stats-grid">
+                <div class="stat">Loading performance statistics...</div>
+            </div>
+
+            <!-- CHARTS -->
+            <div class="dashboard-grid performance-charts">
+
+                <div class="dashboard-card chart-card">
+                    <div class="card-heading">
+                        <div>
+                            <h3>Employee Score Comparison</h3>
+                            <p>Compare average assessment scores.</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="employeeScoreChart"
+                                aria-label="Employee score comparison chart">
+                        </canvas>
+                    </div>
+                </div>
+
+                <div class="dashboard-card chart-card">
+                    <div class="card-heading">
+                        <div>
+                            <h3>Assessment Completion</h3>
+                            <p>Completed, pending and overdue assessments.</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="completionChart"
+                                aria-label="Assessment completion chart">
+                        </canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dashboard-card chart-card">
+                <div class="card-heading">
+                    <div>
+                        <h3>Performance Trend</h3>
+                        <p>Employee performance across assessment attempts.</p>
+                    </div>
+                </div>
+
+                <div class="chart-container chart-container-large">
+                    <canvas id="performanceTrendChart"
+                            aria-label="Performance trend chart">
+                    </canvas>
+                </div>
+            </div>
+
+            <!-- PERFORMANCE TABLE -->
+            <div class="dashboard-card">
+
+                <div class="card-heading">
+                    <div>
+                        <h3>Employee Performance Details</h3>
+                        <p>Search employees and inspect their progress.</p>
+                    </div>
+                </div>
+
+                <div id="performanceList" class="data-list">
+                    Loading performance reports...
+                </div>
+
+            </div>
+
+            <!-- SELECTED EMPLOYEE PERFORMANCE -->
+            <div class="dashboard-card" id="performanceEmployeePanel" hidden>
+
+                <div class="section-heading inner-heading">
+                    <div>
+                        <h3 id="performanceEmployeeTitle">Employee Report</h3>
+                        <p id="performanceEmployeeSubtitle">
+                            Individual performance details.
+                        </p>
+                    </div>
+
+                    <button type="button" class="secondary-button"
+                            id="closePerformanceEmployee">
+                        Close
+                    </button>
+                </div>
+
+                <div id="performanceEmployeeContent" class="data-list">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ATTEMPT HISTORY -->
+        <section id="attempt-history" class="dashboard-view" hidden>
+
+            <div class="section-heading">
+                <div>
+                    <h2>Attempt History</h2>
+                    <p>View employee quiz attempts and submitted scores.</p>
+                </div>
+
+                <button type="button" class="secondary-button"
+                        onclick="loadAttempts()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="dashboard-card">
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input type="search" id="attemptSearch"
+                               placeholder="Search employee or quiz..."
+                               aria-label="Search attempts">
+                    </div>
+                </div>
+
+                <div id="attemptList" class="data-list">
+                    Loading attempts...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer class="dashboard-footer">
+            <p>© 2026 AssessAI. Employee Assessment Platform.</p>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================
+     REUSABLE CUSTOM MODAL
+========================================== -->
+
+<div class="admin-modal-overlay" id="adminModal" hidden>
+
+    <div class="admin-modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="adminModalTitle">
+
+        <div class="admin-modal-header">
+            <div>
+                <p class="section-label">ASSESSAI MANAGEMENT</p>
+                <h2 id="adminModalTitle">Confirm Action</h2>
+            </div>
+
+            <button type="button" class="modal-close"
+                    id="adminModalClose"
+                    aria-label="Close modal">
+                ×
+            </button>
+        </div>
+
+        <div class="admin-modal-body" id="adminModalBody">
+            Are you sure you want to continue?
+        </div>
+
+        <div class="admin-modal-footer" id="adminModalFooter">
+            <button type="button" class="secondary-button"
+                    id="adminModalCancel">
+                Cancel
+            </button>
+
+            <button type="button" class="primary-button"
+                    id="adminModalConfirm">
+                Confirm
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- NOTIFICATION CONTAINER -->
+<div id="adminToastContainer"
+     class="admin-toast-container"
+     aria-live="polite"
+     aria-atomic="true">
+</div>
+
+
+<!-- LIBRARIES -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- APPLICATION SCRIPTS -->
+<script src="../js/app.js"></script>
+<script src="../js/admin.js"></script>
+
+</body>
+</html>

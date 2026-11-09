@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f4f1ff" />
+    <title>Create account · AssessAI</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="auth-page auth-modern">
+    <a class="brand auth-brand" href="/">✳ Assess<span>AI</span></a>
+    <main class="auth-shell register-shell">
+      <section class="auth-visual">
+        <div class="visual-mark">✳</div>
+        <div class="visual-copy">
+          <span>START YOUR NEXT CHAPTER</span>
+          <h2>A smarter way to grow your skills.</h2>
+          <p>Create your account and bring your learning journey into focus.</p>
+        </div>
+        <div class="visual-foot">
+          <span>ASSESS</span><i></i><span>LEARN</span><i></i><span>GROW</span>
+        </div>
+      </section>
+      <section class="auth-content">
+        <div class="auth-content-inner">
+          <div class="auth-symbol">✳</div>
+          <p class="eyebrow">GET STARTED</p>
+          <h1>Create your account</h1>
+          <p class="auth-intro">
+            Enter your details and choose the workspace you need.
+          </p>
+          <div
+            class="role-picker"
+            role="group"
+            aria-label="Choose account type"
+          >
+            <button
+              type="button"
+              class="role-option active"
+              data-role="employee"
+            >
+              <span class="role-icon">♙</span
+              ><span
+                ><b>Employee</b
+                ><small>Take assessments & view results</small></span
+              ><span class="role-check">✓</span></button
+            ><button type="button" class="role-option" data-role="admin">
+              <span class="role-icon">▦</span
+              ><span
+                ><b>Admin</b><small>Create quizzes & manage users</small></span
+              ><span class="role-check">✓</span>
+            </button>
+          </div>
+          <form id="registerForm" class="auth-form">
+            <input
+              type="hidden"
+              name="role"
+              id="registerRole"
+              value="employee"
+            /><label
+              >Full name<input
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+                minlength="2"
+                maxlength="120"
+                placeholder="Your full name" /></label
+            ><label
+              >Email address<input
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                placeholder="you@company.com"
+            /></label>
+            <div class="auth-two">
+              <label
+                >Password<input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                  maxlength="72"
+                  placeholder="At least 8 characters" /></label
+              ><label
+                >Confirm password<input
+                  id="confirmPassword"
+                  name="confirm_password"
+                  type="password"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                  placeholder="Re-enter password"
+              /></label>
+            </div>
+            <div id="adminCodeWrap" class="admin-code-wrap hidden">
+              <label
+                >Admin setup code<input
+                  name="admin_code"
+                  type="password"
+                  autocomplete="off"
+                  placeholder="Enter the code provided by your system owner" /></label
+              ><small
+                >Admin registration requires a private setup code. It is not the
+                same as your password.</small
+              >
+            </div>
+            <label class="terms-check"
+              ><input type="checkbox" id="agreeTerms" required /><span
+                >I agree to use the platform responsibly and keep my account
+                secure.</span
+              ></label
+            ><button class="btn primary full auth-submit" type="submit">
+              Create account <span>→</span>
+            </button>
+            <p id="message" class="message" role="alert"></p>
+          </form>
+          <p class="auth-switch">
+            Already have an account? <a href="login.html">Sign in</a>
+          </p>
+          <p class="auth-legal">
+            Your account details are stored securely. Passwords are never saved
+            as plain text.
+          </p>
+        </div>
+      </section>
+    </main>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>

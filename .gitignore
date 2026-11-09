@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+*.db
+*.sqlite
+*.sqlite3
+ML/models/*.joblib
+ML/reports/*
+.pytest_cache/
+backend/uploads/

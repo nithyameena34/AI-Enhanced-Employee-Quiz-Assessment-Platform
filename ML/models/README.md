@@ -1,0 +1,1 @@
+Trained model artifacts are generated here by ML/scripts/train_model.py and are excluded from Git.

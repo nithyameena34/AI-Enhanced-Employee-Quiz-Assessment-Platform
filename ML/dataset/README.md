@@ -1,0 +1,1 @@
+The training script generates synthetic demonstration data at runtime. No real employee records are included. Synthetic data is useful for demonstrating the training pipeline only; it does not validate performance predictions.
