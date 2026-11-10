@@ -291,6 +291,7 @@ async function loadOverview() {
         }
     }
 }
+
 /* =========================================================
    EMPLOYEE MANAGEMENT
 ========================================================= */
@@ -367,11 +368,16 @@ function renderEmployees() {
     `).join("");
 }
 
-if ($("employeeForm")) {
-    $("employeeForm").addEventListener("submit", async event => {
+/* FIXED: Capture form before await */
+
+const employeeForm = $("employeeForm");
+
+if (employeeForm) {
+    employeeForm.addEventListener("submit", async event => {
         event.preventDefault();
 
-        const form = new FormData(event.currentTarget);
+        const formElement = event.currentTarget;
+        const form = new FormData(formElement);
 
         const payload = {
             name: String(form.get("name") || "").trim(),
@@ -394,12 +400,12 @@ if ($("employeeForm")) {
                 body: JSON.stringify(payload)
             });
 
+            formElement.reset();
+
             message(
                 "employeeMessage",
                 result.message || "Employee created successfully."
             );
-
-            event.currentTarget.reset();
 
             await Promise.all([
                 loadEmployees(),
@@ -517,8 +523,6 @@ async function loadQuizzes() {
             quiz => quiz.title
         );
 
-        // Include inactive quizzes here so their questions
-        // can still be viewed and managed by the administrator.
         setOptions(
             "quizSelect",
             quizzes,
@@ -622,6 +626,7 @@ function editQuiz(id) {
     if ($("quizEditId")) $("quizEditId").value = quiz.id;
     if ($("quizTitle")) $("quizTitle").value = quiz.title || "";
     if ($("quizDescription")) $("quizDescription").value = quiz.description || "";
+
     if ($("quizDuration")) {
         $("quizDuration").value = quiz.duration_minutes || 20;
     }
@@ -698,6 +703,8 @@ if ($("quizForm")) {
                 body: JSON.stringify(payload)
             });
 
+            resetQuizForm();
+
             message(
                 "quizMessage",
                 result.message ||
@@ -705,8 +712,6 @@ if ($("quizForm")) {
                         ? "Quiz updated successfully."
                         : "Quiz created successfully.")
             );
-
-            resetQuizForm();
 
             await Promise.all([
                 loadQuizzes(),
@@ -745,6 +750,7 @@ async function toggleQuiz(id, active) {
         showAdminNotice(error.message, "error");
     }
 }
+
 /* =========================================================
    QUESTION MANAGEMENT
 ========================================================= */
@@ -820,10 +826,15 @@ $("quizSelect")?.addEventListener("change", function() {
     loadQuestions(this.value);
 });
 
-if ($("questionForm")) {
-    $("questionForm").addEventListener("submit", async event => {
+/* FIXED: Capture question form before await */
+
+const questionForm = $("questionForm");
+
+if (questionForm) {
+    questionForm.addEventListener("submit", async event => {
         event.preventDefault();
 
+        const formElement = event.currentTarget;
         const quizId = Number($("quizSelect")?.value);
 
         const payload = {
@@ -874,17 +885,16 @@ if ($("questionForm")) {
                 }
             );
 
+            formElement.reset();
+
+            if ($("quizSelect")) {
+                $("quizSelect").value = String(quizId);
+            }
+
             message(
                 "questionMessage",
                 result.message || "Question added successfully."
             );
-
-            event.currentTarget.reset();
-
-            // Restore the selected quiz after resetting the form.
-            if ($("quizSelect")) {
-                $("quizSelect").value = String(quizId);
-            }
 
             await Promise.all([
                 loadQuestions(quizId),
@@ -1021,20 +1031,73 @@ async function deleteQuestion(questionId, quizId) {
    CSV IMPORT
 ========================================================= */
 
-if ($("csvImportForm")) {
-    $("csvImportForm").addEventListener("submit", async event => {
+/*
+   IMPORTANT FIX:
+   event.currentTarget becomes null after an async handler
+   reaches await. Capture the form before the API request.
+*/
+
+const csvImportForm = $("csvImportForm");
+
+if (csvImportForm) {
+    csvImportForm.addEventListener("submit", async event => {
         event.preventDefault();
 
-        const quizId = Number($("csvQuizSelect")?.value);
-        const file = $("csvFile")?.files[0];
+        const formElement = event.currentTarget;
 
-        if (!quizId || !file) {
+        const quizSelect = $("csvQuizSelect");
+        const fileInput = $("csvFile");
+
+        const quizId = Number(quizSelect?.value);
+        const file = fileInput?.files?.[0];
+
+        if (!quizId || !Number.isInteger(quizId)) {
             message(
                 "csvMessage",
-                "Select a quiz and CSV file.",
+                "Please select a valid quiz.",
                 false
             );
             return;
+        }
+
+        if (!file) {
+            message(
+                "csvMessage",
+                "Please choose a CSV file.",
+                false
+            );
+            return;
+        }
+
+        if (!file.name.toLowerCase().endsWith(".csv")) {
+            message(
+                "csvMessage",
+                "Only CSV files are allowed.",
+                false
+            );
+            return;
+        }
+
+        const importButton = formElement.querySelector(
+            'button[type="submit"], input[type="submit"]'
+        );
+
+        const originalButtonText = importButton
+            ? (
+                importButton.tagName === "INPUT"
+                    ? importButton.value
+                    : importButton.textContent
+            )
+            : "";
+
+        if (importButton) {
+            importButton.disabled = true;
+
+            if (importButton.tagName === "INPUT") {
+                importButton.value = "Importing...";
+            } else {
+                importButton.textContent = "Importing...";
+            }
         }
 
         const formData = new FormData();
@@ -1049,12 +1112,24 @@ if ($("csvImportForm")) {
                 }
             );
 
+            // Use the saved form reference, not event.currentTarget.
+            if (formElement.isConnected) {
+                formElement.reset();
+            }
+
+            // Keep the selected quiz after resetting the form.
+            if (quizSelect) {
+                quizSelect.value = String(quizId);
+            }
+
             message(
                 "csvMessage",
-                result.message || "CSV imported successfully."
+                result.message || "CSV questions imported successfully."
             );
 
-            event.currentTarget.reset();
+            showAdminNotice(
+                result.message || "CSV imported successfully."
+            );
 
             await Promise.all([
                 loadQuizzes(),
@@ -1063,7 +1138,24 @@ if ($("csvImportForm")) {
             ]);
 
         } catch (error) {
-            message("csvMessage", error.message, false);
+            console.error("CSV import error:", error);
+
+            message(
+                "csvMessage",
+                error.message || "CSV import failed.",
+                false
+            );
+
+        } finally {
+            if (importButton) {
+                importButton.disabled = false;
+
+                if (importButton.tagName === "INPUT") {
+                    importButton.value = originalButtonText;
+                } else {
+                    importButton.textContent = originalButtonText;
+                }
+            }
         }
     });
 }
@@ -1192,11 +1284,17 @@ function renderAssessments() {
     `).join("");
 }
 
-if ($("assessmentForm")) {
-    $("assessmentForm").addEventListener("submit", async event => {
+/* FIXED: Capture assessment form before await */
+
+const assessmentForm = $("assessmentForm");
+
+if (assessmentForm) {
+    assessmentForm.addEventListener("submit", async event => {
         event.preventDefault();
 
-        const form = new FormData(event.currentTarget);
+        const formElement = event.currentTarget;
+        const form = new FormData(formElement);
+
         const type = form.get("assessment_type");
 
         const payload = {
@@ -1214,10 +1312,31 @@ if ($("assessmentForm")) {
             max_marks: Number(form.get("max_marks"))
         };
 
+        if (!payload.title) {
+            message(
+                "assessmentMessage",
+                "Please enter an assessment title.",
+                false
+            );
+            return;
+        }
+
         if (type === "quiz" && !payload.quiz_id) {
             message(
                 "assessmentMessage",
                 "Please select a quiz.",
+                false
+            );
+            return;
+        }
+
+        if (
+            !Number.isFinite(payload.max_marks) ||
+            payload.max_marks <= 0
+        ) {
+            message(
+                "assessmentMessage",
+                "Enter a valid maximum mark.",
                 false
             );
             return;
@@ -1229,18 +1348,19 @@ if ($("assessmentForm")) {
                 body: JSON.stringify(payload)
             });
 
-            message(
-                "assessmentMessage",
-                result.message || "Assessment created successfully."
-            );
-
-            event.currentTarget.reset();
+            // Use captured form reference after await.
+            formElement.reset();
 
             if ($("assessmentType")) {
                 $("assessmentType").value = "quiz";
             }
 
             updateAssessmentType();
+
+            message(
+                "assessmentMessage",
+                result.message || "Assessment created successfully."
+            );
 
             await Promise.all([
                 loadAssessments(),
@@ -1316,6 +1436,7 @@ async function deleteAssessment(id) {
         showAdminNotice(error.message, "error");
     }
 }
+
 /* =========================================================
    ASSIGNMENTS
 ========================================================= */
@@ -1547,7 +1668,6 @@ function renderSubmissions(submissions) {
         `;
     }).join("");
 
-    // Event delegation: bind only once.
     if (list.dataset.evaluateHandlerBound !== "true") {
         list.dataset.evaluateHandlerBound = "true";
 
@@ -2019,6 +2139,7 @@ function evaluateSubmission(
         }
     });
 }
+
 /* =========================================================
    PERFORMANCE REPORTS
 ========================================================= */
@@ -2186,7 +2307,6 @@ function renderPerformanceList() {
                 Number(employee.pending_assessments || 0) > 0;
 
         } else if (status === "overdue") {
-            // The current API does not provide overdue counts.
             matchesStatus = false;
         }
 
